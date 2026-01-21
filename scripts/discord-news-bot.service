@@ -1,0 +1,19 @@
+[Unit]
+Description=Discord News Bot - Daily Dust Summary
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/discord-news-bot
+Environment=PATH=/home/ubuntu/discord-news-bot/venv/bin
+ExecStart=/home/ubuntu/discord-news-bot/venv/bin/python bot.py
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
