@@ -1,5 +1,5 @@
 """
-Client pour interagir avec l'API Dust via curl
+Client pour interagir avec l'API Dust via /usr/bin/curl
 """
 import subprocess
 import json
@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class DustClient:
-    """Client pour l'API Dust utilisant curl"""
+    """Client pour l'API Dust utilisant /usr/bin/curl"""
 
     BASE_URL = "https://dust.tt/api/v1"
 
@@ -18,10 +18,10 @@ class DustClient:
         self.workspace_id = workspace_id
         self.api_key = api_key
 
-    def _curl_get(self, url: str) -> Optional[dict]:
-        """Exécute une requête GET via curl"""
+    def _/usr/bin/curl_get(self, url: str) -> Optional[dict]:
+        """Exécute une requête GET via /usr/bin/curl"""
         cmd = [
-            "curl", "-s",
+            "/usr/bin/curl", "-s",
             "-H", f"Authorization: Bearer {self.api_key}",
             "-H", "Content-Type: application/json",
             url
@@ -35,13 +35,13 @@ class DustClient:
                 logger.error(f"Curl GET failed: {result.stderr}")
                 return None
         except Exception as e:
-            logger.error(f"Exception curl GET: {e}")
+            logger.error(f"Exception /usr/bin/curl GET: {e}")
             return None
 
-    def _curl_post(self, url: str, data: dict) -> Optional[dict]:
-        """Exécute une requête POST via curl"""
+    def _/usr/bin/curl_post(self, url: str, data: dict) -> Optional[dict]:
+        """Exécute une requête POST via /usr/bin/curl"""
         cmd = [
-            "curl", "-s",
+            "/usr/bin/curl", "-s",
             "-X", "POST",
             "-H", f"Authorization: Bearer {self.api_key}",
             "-H", "Content-Type: application/json",
@@ -60,7 +60,7 @@ class DustClient:
 
             return response
         except Exception as e:
-            logger.error(f"Exception curl POST: {e}")
+            logger.error(f"Exception /usr/bin/curl POST: {e}")
             return None
 
     async def post_message_to_conversation(self, conversation_id: str, message: str, agent_id: str = None) -> bool:
@@ -80,7 +80,7 @@ class DustClient:
             }
         }
 
-        result = self._curl_post(url, payload)
+        result = self._/usr/bin/curl_post(url, payload)
         if result:
             logger.info("Message envoyé avec succès à la conversation")
             return True
@@ -90,7 +90,7 @@ class DustClient:
         """Récupère le dernier message de l'agent dans une conversation"""
         url = f"{self.BASE_URL}/w/{self.workspace_id}/assistant/conversations/{conversation_id}"
 
-        data = self._curl_get(url)
+        data = self._/usr/bin/curl_get(url)
         if not data:
             return None
 
