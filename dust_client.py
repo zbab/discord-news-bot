@@ -115,10 +115,11 @@ class DustClient:
             logger.warning("Aucun message d'agent trouvé")
             return None
 
-    async def trigger_daily_summary(self, conversation_id: str, agent_id: str = None) -> bool:
+    async def trigger_daily_summary(self, conversation_id: str, agent_id: str) -> bool:
         """Déclenche la génération du résumé quotidien"""
-        message = "Peux-tu me donner un résumé des actualités importantes des réseaux sociaux d'aujourd'hui ?"
-        success = await self.post_message_to_conversation(conversation_id, message, None)
+        # Mention dans le texte ET dans le payload pour déclencher l'agent
+        message = f":mention[Actualité-réseaux]{{sId={agent_id}}} Peux-tu me donner un résumé des actualités importantes des réseaux sociaux d'aujourd'hui ?"
+        success = await self.post_message_to_conversation(conversation_id, message, agent_id)
         if success:
             logger.info("Génération du résumé déclenchée avec succès")
         return success
